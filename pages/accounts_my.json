@@ -1,0 +1,59 @@
+{
+    "type": "page",
+    "title": "我的",
+    "body": [
+      {
+        "type": "alert",
+        "body": [],
+        "level": "info",
+        "id": "u:aa775c3f2f61",
+        "showIcon": true,
+        "title": "所有功能正在加速研发中，完整体验敬请期待！",
+        "showCloseButton": false
+      },
+      {
+        "type": "card",
+        "header": {
+          "title": "${detail_realname}",
+          "subTitle": "${detail_rolename}"
+        },
+        "body": [],
+        "actions": [
+          {
+            "type": "button",
+            "label": "退出登录",
+            "actionType": "dialog",
+            "dialog": {
+              "title": "标题",
+              "body": "内容"
+            },
+            "id": "u:e6d944475623",
+            "icon": "",
+            "confirmText": "是否确认退出登录",
+            "className": "text-danger",
+            "onEvent": {
+              "click": {
+                "actions": [
+                  {
+                    "actionType": "custom",
+                    "script": "\nlocalStorage.setItem(\"access_token\", null);\nlocalStorage.setItem(\"refresh_token\", null);\nwindow.location.href = \"/\";"
+                  }
+                ],
+                "weight": 0
+              }
+            }
+          }
+        ],
+        "id": "u:afbfedc59f88"
+      }
+    ],
+    "id": "u:35831066a41a",
+    "messages": {},
+    "pullRefresh": {},
+    "initApi": {
+      "method": "post",
+      "url": "https://api.school.ledotec.cn/v2/lowcode/accounts/my",
+      "dataType": "json"
+    },
+    "initFetch": true
+  }

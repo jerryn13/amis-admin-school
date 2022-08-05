@@ -1,0 +1,55 @@
+{
+    "status": 0,
+    "msg": "",
+    "data": {
+      "pages": [
+        {
+          "label": "Home",
+          "url": "/",
+          "redirect": "/accounts/my"
+        },
+        {
+          "label": "身份与权限",
+          "children": [
+            {
+              "label": "账号",
+              "url": "/accounts",
+              "rewrite": "/accounts/my",
+              "children": [
+                {
+                  "label": "我的",
+                  "url": "/accounts/my",
+                  "schemaApi": "get:/pages/accounts_my.json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+            "label": "大数据+",
+            "children": [
+                {
+                    "label": "成绩大数据",
+                    "url": "/bigdata/score",
+                    "schemaApi": "get:/pages/bigdata_score_task.json",
+                    "children":[
+                       {"label": "分析任务管理",
+                       "url": "/bigdata/score/tasks",
+                       "schemaApi": "get:/pages/bigdata_score_task.json"
+                    } 
+                    ]
+                  }
+            ]
+        },
+        {
+          "label": "常用",
+          "children": [
+            {
+              "label": "帮助文档",
+              "link": "http://baidu.gitee.io/amis"
+            }
+          ]
+        }
+      ]
+    }
+  }

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>桂圆云校管理后台</title>
+    <link rel="shortcut icon" href="/favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
@@ -34,6 +35,11 @@
     </style>
   </head>
   <body>
+    <script>
+    if (localStorage.getItem("refresh_token")==null || localStorage.getItem("access_token")==null){
+        window.location.href="/login"
+    };
+    </script>
     <div id="root" class="app-wrapper"></div>
     <script>
       (function () {
@@ -46,8 +52,8 @@
 
         const app = {
           type: 'app',
-          brandName: 'Admin',
-          logo: '/public/logo.png',
+          brandName: '桂圆云校',
+          logo: 'https://s1.ledotec.cn/webfront/ooischool/static/web/appicon.png',
           //header: {
           //  type: 'tpl',
           //  inline: false,
@@ -58,9 +64,9 @@
           // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
           // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
           // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
-          api: '/pages/site.json'
+          api: '/pages/site_admin_1.json'
         };
-
+        
         function normalizeLink(to, location = history.location) {
           to = to || '';
 
