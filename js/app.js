@@ -181,3 +181,4 @@ function usecss(name){
     var csssrc="https://s1.ledotec.cn/webfront/cdn/npm/";
     document.write('<link rel="stylesheet" href="'+csssrc+name+'">');
 }
+app();
