@@ -1,3 +1,7 @@
+var myapihost='https://api.school.ledotec.cn';
+var isRefreshingAK=false;
+var apiErrorCounter=0;
+
 function ready(){
     let amis = amisRequire('amis/embed');
     const match = amisRequire('path-to-regexp').match;
@@ -90,6 +94,8 @@ function ready(){
         location: history.location
       },
       {
+        //fetcher:myfetch
+        requestAdaptor:myRequestAdaptor,
         // watchRouteChange: fn => {
         //   return history.listen(fn);
         // },
@@ -181,4 +187,69 @@ function usecss(name){
     var csssrc="https://s1.ledotec.cn/webfront/cdn/npm/";
     document.write('<link rel="stylesheet" href="'+csssrc+name+'">');
 }
+function myfetch(params){
+  var method = params.method;
+  var body = params.body;
+  var url = params.url;
+  return new Promise(function (resolve,reject){
+    fetch(url,{
+      method:method,
+      headers:new Headers({
+        'Authorization':'Bearer '+localStorage.getItem('access_token')
+      }),
+      body:JSON.stringify(body)
+    }).then(function(res){
+      if(apiErrorCounter>2){return};
+      if (res.json().code='Request.AuthorizationInvaildOutOfDate' && isRefreshingAK==false){
+        isRefreshingAK=true;
+        apiErrorCounter=apiErrorCounter+1;
+        fetch(myapihost+'/v2/auth/tokenexchange',{
+          method:'POST',
+          body:JSON.stringify(
+            {"refresh_token":localStorage.getItem('refresh_token')}
+          )
+        }).then(function(res){
+          isRefreshingAK=false;
+          if (res.json().code!="Success"){
+            window.location.href='/login';
+          };
+          localStorage.setItem('access_token',res.json().access_token)
+        });
+        return myfetch(params);
+      }
+      return res.json();
+    })
+
+  }
+  );
+};
+function myRequestAdaptor(api) {
+  if (Math.round(new Date().getTime()/1000)>Number(localStorage.getItem('access_token_express')) && isRefreshingAK==false && apiErrorCounter<3){
+    isRefreshingAK=true;
+    fetch(myapihost+'/v2/auth/tokenexchange',{
+      method:'POST',
+      body:JSON.stringify(
+        {"refresh_token":localStorage.getItem('refresh_token')}
+      )
+    }).then(function(res){
+      isRefreshingAK=false;
+      if (res.json().code!="Success"){
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('access_token_express');
+        window.location.href='/login';
+      };
+      localStorage.setItem('access_token',res.json().access_token)
+      localStorage.setItem('access_token_express',String(Number(res.json().access_token_express)+Math.round(new Date().getTime()/1000)-5000))
+    });
+  }
+  return{
+    ...api,
+    headers:{
+      ...api.headers,
+      Authorization:'Bearer '+localStorage.getItem('access_token')
+    }
+  }
+  
+};
 app();

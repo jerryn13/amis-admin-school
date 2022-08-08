@@ -1,0 +1,136 @@
+{
+  "type": "page",
+  "title": "成绩分析：导入数据",
+  "body": [
+    {
+      "type": "select",
+      "label": "选择要操作的任务",
+      "name": "select",
+      "id": "u:0e88737876f8",
+      "multiple": false,
+      "size": "md",
+      "mode": "inline"
+    },
+    {
+      "type": "submit",
+      "label": "点这里上传",
+      "onEvent": {
+        "click": {
+          "actions": [
+          ]
+        }
+      },
+      "id": "u:050dbbbf7ab0",
+      "level": "primary",
+      "block": false,
+      "size": "md",
+      "className": "w-xxl"
+    },
+    {
+      "type": "input-excel",
+      "label": "上传Excel成绩",
+      "name": "excel",
+      "id": "u:aa458014c390",
+      "parseMode": "object",
+      "plainText": true,
+      "allSheets": false,
+      "clearValueOnHidden": false,
+      "mode": "normal",
+      "className": ""
+    },
+    {
+      "type": "input-table",
+      "name": "excel",
+      "label": "表格表单",
+      "columns": [
+        {
+          "label": "姓名",
+          "name": "姓名",
+          "quickEdit": {
+            "type": "input-color"
+          },
+          "type": "text",
+          "id": "u:1af8bb7c9718"
+        },
+        {
+          "label": "班级",
+          "name": "班级",
+          "quickEdit": {
+            "type": "input-text",
+            "mode": "popOver",
+            "id": "u:f902ef199bbe"
+          },
+          "type": "text",
+          "id": "u:a4e59ae4c89b",
+          "placeholder": "-"
+        },
+        {
+          "type": "text",
+          "label": "语文",
+          "id": "u:73ff2d9b578b",
+          "name": "语文"
+        },
+        {
+          "type": "text",
+          "label": "数学",
+          "id": "u:e1e420b8a071",
+          "name": "数学"
+        },
+        {
+          "type": "text",
+          "label": "英语",
+          "id": "u:48d5bef976d6",
+          "name": "英语"
+        },
+        {
+          "type": "text",
+          "label": "物理",
+          "id": "u:5ba9051ff91b",
+          "name": "物理"
+        },
+        {
+          "type": "text",
+          "label": "历史",
+          "id": "u:df8ede88511e",
+          "name": "历史"
+        },
+        {
+          "type": "text",
+          "label": "化学",
+          "id": "u:3b6e0f168154",
+          "name": "化学"
+        },
+        {
+          "type": "text",
+          "label": "政治",
+          "id": "u:dca52131e78d",
+          "name": "政治"
+        },
+        {
+          "type": "text",
+          "label": "生物",
+          "id": "u:d35f12b2b3bf",
+          "name": "生物"
+        },
+        {
+          "type": "text",
+          "label": "地理",
+          "id": "u:f37e156ced63",
+          "name": "地理"
+        }
+      ],
+      "strictMode": true,
+      "id": "u:18817e94dbda",
+      "visibleOn": "data.excel"
+    }
+  ],
+  "id": "u:0a9d32e3feac",
+  "messages": {
+  },
+  "pullRefresh": {
+  },
+  "subTitle": "",
+  "style": {
+    "backgroundImage": "linear-gradient(180deg, #f2f2f2, #ffffff)"
+  }
+}

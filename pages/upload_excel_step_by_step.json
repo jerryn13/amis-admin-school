@@ -1,0 +1,94 @@
+{
+  "type": "page",
+  "title": "成绩分析：导入数据",
+  "body": [
+    {
+      "type": "tpl",
+      "tpl": "第一步：下载Excel模板，按格式把成绩数据粘贴到表格中。",
+      "inline": true,
+      "wrapperComponent": "h2",
+      "id": "u:9eaf958897df"
+    },
+    {
+      "type": "submit",
+      "label": "点这里下载模板Excel",
+      "onEvent": {
+        "click": {
+          "actions": [
+          ]
+        }
+      },
+      "id": "u:d48ad7234096",
+      "level": "primary",
+      "block": false,
+      "size": "md",
+      "className": "w-full"
+    },
+    {
+      "type": "tpl",
+      "tpl": "第二步：选择相关分析任务。",
+      "inline": true,
+      "wrapperComponent": "h2",
+      "id": "u:97a2ca1334ff"
+    },
+    {
+      "type": "select",
+      "label": "选择要操作的任务",
+      "name": "select",
+      "id": "u:0e88737876f8",
+      "multiple": false,
+      "size": "md",
+      "mode": "horizontal"
+    },
+    {
+      "type": "tpl",
+      "tpl": "第三步：保存填好的表格，在这里上传。",
+      "inline": true,
+      "wrapperComponent": "h2",
+      "id": "u:8d374d196567"
+    },
+    {
+      "type": "input-excel",
+      "label": "上传Excel成绩",
+      "name": "excel",
+      "id": "u:aa458014c390",
+      "parseMode": "object",
+      "plainText": true,
+      "allSheets": false,
+      "clearValueOnHidden": false,
+      "mode": "normal",
+      "className": ""
+    },
+    {
+      "type": "tpl",
+      "tpl": "第四步：点下面这个按钮，大功告成。",
+      "inline": true,
+      "wrapperComponent": "h2",
+      "id": "u:fbc36a8811b8"
+    },
+    {
+      "type": "submit",
+      "label": "点这里上传",
+      "onEvent": {
+        "click": {
+          "actions": [
+          ]
+        }
+      },
+      "id": "u:050dbbbf7ab0",
+      "level": "primary",
+      "block": false,
+      "size": "md",
+      "className": "w-full"
+    }
+  ],
+  "id": "u:0a9d32e3feac",
+  "messages": {
+  },
+  "pullRefresh": {
+  },
+  "subTitle": "",
+  "style": {
+    "backgroundImage": "linear-gradient(180deg, #f2f2f2, #ffffff)"
+  }
+}

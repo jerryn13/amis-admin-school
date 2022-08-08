@@ -7,7 +7,7 @@
         "syncLocation": false,
         "api": {
           "method": "post",
-          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks"
+          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get"
         },
         "bulkActions": [
         ],
@@ -32,21 +32,21 @@
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks"
+                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get"
                 },
                 "body": [
                   {
-                    "type": "input-undefined",
+                    "type": "input",
                     "name": "id",
                     "label": "ID"
                   },
                   {
-                    "type": "input-undefined",
+                    "type": "input",
                     "name": "name",
                     "label": "列信息"
                   },
                   {
-                    "type": "input-operation",
+                    "type": "input",
                     "name": "curds",
                     "label": "操作"
                   }
@@ -86,7 +86,7 @@
                               "componentId": "",
                               "args": {
                                 "api": {
-                                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/task/new",
+                                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/new",
                                   "method": "post",
                                   "dataType": "json",
                                   "data": {
@@ -157,7 +157,7 @@
                         "componentId": "",
                         "args": {
                           "api": {
-                            "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/task/delete",
+                            "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/delete",
                             "method": "post",
                             "data": {
                               "taskid": "${taskid}"
