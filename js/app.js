@@ -189,9 +189,29 @@ function usecss(name){
 };
 function myRequestAdaptor(api) {
   var final_access_token=localStorage.getItem('access_token');
-  if (Math.round(new Date().getTime()/1000)>Number(localStorage.getItem('access_token_express')) && isRefreshingAK==false && apiErrorCounter<3){
+  if (Math.round(new Date().getTime()/1000)>Number(localStorage.getItem('access_token_express')) && g_isRefreshingAK==false && apiErrorCounter<3){
     g_isRefreshingAK=true;//锁定为正在刷新，避免二刷
-    final_access_token=exchange_access_token();
+    const request = new XMLHttpRequest();
+    request.open('POST', myapihost+'/v2/auth/tokenexchange', false);
+    request.send(JSON.stringify(
+      {"refresh_token":localStorage.getItem('refresh_token')}
+    ));
+    res=JSON.parse(request.responseText)
+    g_isRefreshingAK=false;//释放锁
+    if (res.code!="Success"){
+        //刷新失败，跳到登录页让用户重新登录
+        //先清空令牌，防止登录页跳转死循环
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('access_token_express');
+        //跳登录页
+        window.location.href='/login';
+        return;
+    };
+    //成功，保存新AK和过期时间
+    localStorage.setItem('access_token',res.data.access_token);
+    localStorage.setItem('access_token_express',String(Number(res.data.access_token_ttl)+Math.round(new Date().getTime()/1000)-5000));
+    final_access_token=res.data.access_token;
   };
   return{
     ...api,
@@ -200,31 +220,5 @@ function myRequestAdaptor(api) {
       Authorization:'Bearer '+final_access_token
     }
   }
-};
-function exchange_access_token(){
-  fetch(myapihost+'/v2/auth/tokenexchange',{
-    method:'POST',
-    body:JSON.stringify(
-      {"refresh_token":localStorage.getItem('refresh_token')}
-    )
-  }).then(response => {
-    return response.json();
-  }).then(res => {
-    g_isRefreshingAK=false;//释放锁
-    if (res.code!="Success"){
-      //刷新失败，跳到登录页让用户重新登录
-      //先清空令牌，防止登录页跳转死循环
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('access_token_express');
-      //跳登录页
-      window.location.href='/login';
-      return;
-    };
-    //成功，保存新AK和过期时间
-    localStorage.setItem('access_token',res.data.access_token);
-    localStorage.setItem('access_token_express',String(Number(res.data.access_token_ttl)+Math.round(new Date().getTime()/1000)-5000));
-    return res.data.access_token;
-  });
 };
 app();
