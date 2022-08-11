@@ -3,6 +3,16 @@
   "title": "成绩分析任务管理",
   "body": [
     {
+      "type": "alert",
+      "body": [
+      ],
+      "level": "info",
+      "id": "u:f33de027d096",
+      "showIcon": true,
+      "showCloseButton": true,
+      "title": "欢迎使用成绩大数据分析，系统还在开发中。如遇到问题，敬请谅解，您可以联系在线客服解决。"
+    },
+    {
       "type": "crud",
       "syncLocation": false,
       "api": {
@@ -44,7 +54,10 @@
                             "label": "任务名称（例如：2021级高一下段考）",
                             "type": "input-text",
                             "name": "taskname",
-                            "id": "u:5f9c71ce2ea3"
+                            "id": "u:5f9c71ce2ea3",
+                            "required": true,
+                            "mode": "normal",
+                            "size": "full"
                           }
                         ],
                         "api": {
@@ -138,6 +151,15 @@
               "onEvent": {
                 "click": {
                   "actions": [
+                    {
+                      "args": {
+                        "params": {
+                        },
+                        "blank": false,
+                        "url": "https://console.school.ledotec.cn/#/bigdata/score/task/view/${id}"
+                      },
+                      "actionType": "url"
+                    }
                   ]
                 }
               },
@@ -150,25 +172,77 @@
                 "click": {
                   "actions": [
                     {
-                      "args": {
-                        "api": {
-                          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/delete",
-                          "method": "post",
-                          "data": {
-                            "taskid": "${id}"
+                      "actionType": "dialog",
+                      "dialog": {
+                        "type": "dialog",
+                        "title": "确认删除",
+                        "body": [
+                          {
+                            "type": "tpl",
+                            "tpl": "<p>是否确认删除这个任务（不可恢复）？</p>",
+                            "inline": false,
+                            "id": "u:3df8f37f4938"
+                          }
+                        ],
+                        "id": "u:c8b4ac048842",
+                        "closeOnEsc": true,
+                        "closeOnOutside": true,
+                        "showCloseButton": true,
+                        "actions": [
+                          {
+                            "type": "button",
+                            "label": "取消",
+                            "onEvent": {
+                              "click": {
+                                "actions": [
+                                ]
+                              }
+                            },
+                            "id": "u:14b5bb85f123",
+                            "close": true
                           },
-                          "dataType": "json"
-                        },
-                        "messages": {
-                        }
-                      },
-                      "actionType": "ajax"
-                    },
-                    {
-                      "componentId": "",
-                      "args": {
-                      },
-                      "actionType": "refresh"
+                          {
+                            "type": "submit",
+                            "label": "删除",
+                            "onEvent": {
+                              "click": {
+                                "actions": [
+                                  {
+                                    "componentId": "",
+                                    "args": {
+                                      "api": {
+                                        "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/delete",
+                                        "method": "post",
+                                        "data": {
+                                          "taskid": "${id}"
+                                        }
+                                      },
+                                      "messages": {
+                                      }
+                                    },
+                                    "actionType": "ajax"
+                                  },
+                                  {
+                                    "componentId": "",
+                                    "args": {
+                                    },
+                                    "actionType": "refresh"
+                                  },
+                                  {
+                                    "componentId": "",
+                                    "args": {
+                                    },
+                                    "actionType": "closeDialog"
+                                  }
+                                ]
+                              }
+                            },
+                            "id": "u:2093ed91f6f6",
+                            "close": false,
+                            "level": "danger"
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
