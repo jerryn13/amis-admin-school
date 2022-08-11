@@ -1,5 +1,5 @@
 var myapihost='https://api.school.ledotec.cn';
-var isRefreshingAK=false;
+var g_isRefreshingAK=false;
 var apiErrorCounter=0;
 
 function ready(){
@@ -186,70 +186,45 @@ function usejs(name){
 function usecss(name){
     var csssrc="https://s1.ledotec.cn/webfront/cdn/npm/";
     document.write('<link rel="stylesheet" href="'+csssrc+name+'">');
-}
-function myfetch(params){
-  var method = params.method;
-  var body = params.body;
-  var url = params.url;
-  return new Promise(function (resolve,reject){
-    fetch(url,{
-      method:method,
-      headers:new Headers({
-        'Authorization':'Bearer '+localStorage.getItem('access_token')
-      }),
-      body:JSON.stringify(body)
-    }).then(function(res){
-      if(apiErrorCounter>2){return};
-      if (res.json().code='Request.AuthorizationInvaildOutOfDate' && isRefreshingAK==false){
-        isRefreshingAK=true;
-        apiErrorCounter=apiErrorCounter+1;
-        fetch(myapihost+'/v2/auth/tokenexchange',{
-          method:'POST',
-          body:JSON.stringify(
-            {"refresh_token":localStorage.getItem('refresh_token')}
-          )
-        }).then(function(res){
-          isRefreshingAK=false;
-          if (res.json().code!="Success"){
-            window.location.href='/login';
-          };
-          localStorage.setItem('access_token',res.json().access_token)
-        });
-        return myfetch(params);
-      }
-      return res.json();
-    })
-
-  }
-  );
 };
 function myRequestAdaptor(api) {
+  var final_access_token=localStorage.getItem('access_token');
   if (Math.round(new Date().getTime()/1000)>Number(localStorage.getItem('access_token_express')) && isRefreshingAK==false && apiErrorCounter<3){
-    isRefreshingAK=true;
-    fetch(myapihost+'/v2/auth/tokenexchange',{
-      method:'POST',
-      body:JSON.stringify(
-        {"refresh_token":localStorage.getItem('refresh_token')}
-      )
-    }).then(function(res){
-      isRefreshingAK=false;
-      if (res.json().code!="Success"){
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token_express');
-        window.location.href='/login';
-      };
-      localStorage.setItem('access_token',res.json().access_token)
-      localStorage.setItem('access_token_express',String(Number(res.json().access_token_express)+Math.round(new Date().getTime()/1000)-5000))
-    });
-  }
+    g_isRefreshingAK=true;//锁定为正在刷新，避免二刷
+    final_access_token=exchange_access_token();
+  };
   return{
     ...api,
     headers:{
       ...api.headers,
-      Authorization:'Bearer '+localStorage.getItem('access_token')
+      Authorization:'Bearer '+final_access_token
     }
   }
-  
+};
+function exchange_access_token(){
+  fetch(myapihost+'/v2/auth/tokenexchange',{
+    method:'POST',
+    body:JSON.stringify(
+      {"refresh_token":localStorage.getItem('refresh_token')}
+    )
+  }).then(response => {
+    return response.json();
+  }).then(res => {
+    g_isRefreshingAK=false;//释放锁
+    if (res.code!="Success"){
+      //刷新失败，跳到登录页让用户重新登录
+      //先清空令牌，防止登录页跳转死循环
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token_express');
+      //跳登录页
+      window.location.href='/login';
+      return;
+    };
+    //成功，保存新AK和过期时间
+    localStorage.setItem('access_token',res.data.access_token);
+    localStorage.setItem('access_token_express',String(Number(res.data.access_token_ttl)+Math.round(new Date().getTime()/1000)-5000));
+    return res.data.access_token;
+  });
 };
 app();

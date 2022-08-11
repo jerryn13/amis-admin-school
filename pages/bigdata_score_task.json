@@ -1,187 +1,188 @@
 {
-    "type": "page",
-    "title": "成绩分析任务管理",
-    "body": [
-      {
-        "type": "crud",
-        "syncLocation": false,
-        "api": {
-          "method": "post",
-          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get"
-        },
-        "bulkActions": [
-        ],
-        "itemActions": [
-        ],
-        "features": [
-          "create",
-          "filter",
-          "view",
-          "delete"
-        ],
-        "filterColumnCount": 3,
-        "headerToolbar": [
-          {
-            "label": "新增",
-            "type": "button",
-            "actionType": "dialog",
-            "level": "primary",
-            "dialog": {
-              "title": "新增",
-              "body": {
-                "type": "form",
-                "api": {
-                  "method": "post",
-                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get"
-                },
-                "body": [
-                  {
-                    "type": "input",
-                    "name": "id",
-                    "label": "ID"
-                  },
-                  {
-                    "type": "input",
-                    "name": "name",
-                    "label": "列信息"
-                  },
-                  {
-                    "type": "input",
-                    "name": "curds",
-                    "label": "操作"
-                  }
-                ]
-              }
-            },
-            "id": "u:58994ae8caa9",
-            "onEvent": {
-              "click": {
-                "actions": [
-                  {
-                    "componentId": "",
-                    "args": {
-                    },
-                    "actionType": "dialog",
-                    "dialog": {
-                      "type": "dialog",
-                      "title": "创建成绩分析任务",
-                      "body": [
-                        {
-                          "type": "input-text",
-                          "label": "任务名称",
-                          "name": "newtaskname",
-                          "id": "u:b20afd6799db",
-                          "size": "full"
-                        }
-                      ],
-                      "id": "u:ff66568c0230",
-                      "closeOnEsc": true,
-                      "closeOnOutside": false,
-                      "showCloseButton": true,
-                      "onEvent": {
-                        "confirm": {
-                          "weight": 0,
-                          "actions": [
-                            {
-                              "componentId": "",
-                              "args": {
-                                "api": {
-                                  "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/new",
-                                  "method": "post",
-                                  "dataType": "json",
-                                  "data": {
-                                    "taskname": "${newtaskname}"
-                                  }
-                                },
-                                "messages": {
-                                }
-                              },
-                              "actionType": "ajax"
-                            }
-                          ]
+  "type": "page",
+  "title": "成绩分析任务管理",
+  "body": [
+    {
+      "type": "crud",
+      "syncLocation": false,
+      "api": {
+        "method": "post",
+        "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get"
+      },
+      "bulkActions": [
+      ],
+      "itemActions": [
+      ],
+      "features": [
+        "create",
+        "filter",
+        "view",
+        "delete"
+      ],
+      "filterColumnCount": 3,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "level": "primary",
+          "id": "u:58994ae8caa9",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "drawer",
+                  "drawer": {
+                    "type": "drawer",
+                    "title": "新建成绩分析任务",
+                    "body": [
+                      {
+                        "type": "form",
+                        "id": "u:2711049850df",
+                        "title": "表单",
+                        "body": [
+                          {
+                            "label": "任务名称（例如：2021级高一下段考）",
+                            "type": "input-text",
+                            "name": "taskname",
+                            "id": "u:5f9c71ce2ea3"
+                          }
+                        ],
+                        "api": {
+                          "method": "post",
+                          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/new",
+                          "dataType": "json"
                         }
                       }
-                    }
-                  }
-                ],
-                "weight": 0
-              }
-            }
-          },
-          "bulkActions"
-        ],
-        "id": "u:3e659b88e1d1",
-        "perPageAvailable": [
-          30
-        ],
-        "messages": {
-        },
-        "primaryField": "taskid",
-        "source": "${objects}",
-        "mode": "table",
-        "columns": [
-          {
-            "label": "ID",
-            "name": "id",
-            "id": "u:be0227e54f8b"
-          },
-          {
-            "label": "列信息",
-            "name": "name",
-            "id": "u:92c93431c6ee"
-          },
-          {
-            "type": "operation",
-            "label": "操作",
-            "name": "curds",
-            "id": "u:70670eb86152",
-            "buttons": [
-              {
-                "type": "button",
-                "label": "查看任务",
-                "onEvent": {
-                  "click": {
-                    "actions": [
-                    ]
-                  }
-                },
-                "id": "u:4f88edec7a1b"
-              },
-              {
-                "type": "button",
-                "label": "删除",
-                "onEvent": {
-                  "click": {
+                    ],
+                    "id": "u:9be7993c309b",
+                    "position": "right",
+                    "onEvent": {
+                      "confirm": {
+                        "weight": 0,
+                        "actions": [
+                        ]
+                      }
+                    },
+                    "closeOnOutside": true,
                     "actions": [
                       {
-                        "componentId": "",
-                        "args": {
-                          "api": {
-                            "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/delete",
-                            "method": "post",
-                            "data": {
-                              "taskid": "${taskid}"
-                            }
-                          },
-                          "messages": {
+                        "type": "button",
+                        "label": "取消",
+                        "onEvent": {
+                          "click": {
+                            "actions": [
+                              {
+                                "componentId": "",
+                                "args": {
+                                },
+                                "actionType": "closeDrawer"
+                              }
+                            ]
                           }
                         },
-                        "actionType": "ajax"
+                        "id": "u:edc66bd195e5"
+                      },
+                      {
+                        "type": "submit",
+                        "label": "新建",
+                        "onEvent": {
+                          "click": {
+                            "actions": [
+                            ]
+                          }
+                        },
+                        "id": "u:1a38f2ccc3a0",
+                        "level": "primary"
                       }
                     ]
                   }
-                },
-                "id": "u:30d42a4c47a1",
-                "level": "danger",
-                "confirmText": "确认要删除吗（操作不可恢复）"
-              }
-            ],
-            "placeholder": "-",
-            "toggled": true
+                }
+              ],
+              "weight": 0
+            }
           }
-        ],
-        "filter": null
-      }
-    ],
-    "id": "u:b6cb4a20bd35"
-  }
+        },
+        "bulkActions"
+      ],
+      "id": "u:3e659b88e1d1",
+      "perPageAvailable": [
+        30
+      ],
+      "messages": {
+      },
+      "primaryField": "taskid",
+      "source": "${objects}",
+      "mode": "table",
+      "columns": [
+        {
+          "label": "任务标识号码",
+          "name": "id",
+          "id": "u:be0227e54f8b",
+          "placeholder": "-"
+        },
+        {
+          "label": "分析任务名称",
+          "name": "name",
+          "id": "u:92c93431c6ee",
+          "placeholder": "-"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "name": "curds",
+          "id": "u:70670eb86152",
+          "buttons": [
+            {
+              "type": "button",
+              "label": "查看任务",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                  ]
+                }
+              },
+              "id": "u:4f88edec7a1b"
+            },
+            {
+              "type": "button",
+              "label": "删除",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "args": {
+                        "api": {
+                          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/delete",
+                          "method": "post",
+                          "data": {
+                            "taskid": "${id}"
+                          },
+                          "dataType": "json"
+                        },
+                        "messages": {
+                        }
+                      },
+                      "actionType": "ajax"
+                    },
+                    {
+                      "componentId": "",
+                      "args": {
+                      },
+                      "actionType": "refresh"
+                    }
+                  ]
+                }
+              },
+              "id": "u:30d42a4c47a1",
+              "level": "danger"
+            }
+          ],
+          "placeholder": "-",
+          "toggled": true
+        }
+      ],
+      "filter": null
+    }
+  ],
+  "id": "u:b6cb4a20bd35"
+}
