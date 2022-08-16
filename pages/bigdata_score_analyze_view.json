@@ -1,0 +1,372 @@
+{
+    "type": "page",
+    "title": "成绩分析工作台",
+    "body": [
+      {
+        "type": "select",
+        "label": "选择任务",
+        "name": "select",
+        "id": "u:8ab4cb76a42c",
+        "source": {
+          "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/tasks/get",
+          "method": "post",
+          "messages": {
+          },
+          "data": null,
+          "dataType": "json"
+        },
+        "labelField": "name",
+        "valueField": "id",
+        "removable": false,
+        "creatable": false,
+        "onEvent": {
+          "change": {
+            "weight": 0,
+            "actions": [
+              {
+                "componentId": "",
+                "args": {
+                  "blank": false,
+                  "url": "https://console.school.ledotec.cn/#/bigdata/score/analyze/${event.data.value}"
+                },
+                "actionType": "url"
+              }
+            ]
+          }
+        },
+        "multiple": false
+      },
+      {
+        "type": "tabs",
+        "tabs": [
+          {
+            "title": "仪表盘",
+            "body": [
+              {
+                "type": "grid",
+                "columns": [
+                  {
+                    "body": [
+                      {
+                        "type": "alert",
+                        "body": [
+                        ],
+                        "level": "warning",
+                        "id": "u:0a74eafc4d56",
+                        "title": "您还没有上传原始数据，请点击上方【原始数据】选项卡并导入数据。",
+                        "showIcon": true,
+                        "hidden": "typeof this.hiddenOn === \"string\" ? 2 : 1",
+                        "hiddenOn": "${dash_task_hide_import_tip == true}"
+                      },
+                      {
+                        "type": "card",
+                        "header": {
+                          "title": "项目名称：${dash_taskname}",
+                          "subTitle": "状态：${dash_taskstatus}"
+                        },
+                        "body": [
+                        ],
+                        "actions": [
+                        ],
+                        "id": "u:b901413e82ad"
+                      }
+                    ],
+                    "id": "u:c67c0672cb2a",
+                    "md": 12
+                  }
+                ],
+                "id": "u:186d8b2632b8",
+                "valign": "top",
+                "align": "center"
+              }
+            ],
+            "id": "u:d22abf04b3e9"
+          },
+          {
+            "title": "原始数据",
+            "body": [
+              {
+                "type": "button",
+                "label": "导入原始分数据",
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "drawer",
+                        "drawer": {
+                          "type": "drawer",
+                          "title": "导入原始分",
+                          "body": [
+                            {
+                              "type": "page",
+                              "title": "",
+                              "body": [
+                                {
+                                  "type": "tpl",
+                                  "tpl": "第一步：下载Excel模板，按格式把成绩数据粘贴到表格中。",
+                                  "inline": true,
+                                  "wrapperComponent": "h2",
+                                  "id": "u:9eaf958897df"
+                                },
+                                {
+                                  "type": "submit",
+                                  "label": "点这里下载表格模板（Excel）",
+                                  "onEvent": {
+                                    "click": {
+                                      "actions": [
+                                      ]
+                                    }
+                                  },
+                                  "id": "u:d48ad7234096",
+                                  "level": "primary",
+                                  "block": false,
+                                  "size": "md",
+                                  "className": "w-full"
+                                },
+                                {
+                                  "type": "tpl",
+                                  "tpl": "第二步：保存填好的表格，在这里上传。",
+                                  "inline": true,
+                                  "wrapperComponent": "h2",
+                                  "id": "u:8d374d196567"
+                                },
+                                {
+                                  "type": "input-excel",
+                                  "label": "上传Excel成绩",
+                                  "name": "excel",
+                                  "id": "u:aa458014c390",
+                                  "mode": "normal",
+                                  "parseMode": "object",
+                                  "plainText": true,
+                                  "allSheets": false,
+                                  "clearValueOnHidden": false,
+                                  "className": ""
+                                },
+                                {
+                                  "type": "tpl",
+                                  "tpl": "第三步：点下面的【上传】按钮。上传成功后系统会自动分析成绩，请耐心等待。",
+                                  "inline": true,
+                                  "wrapperComponent": "h2",
+                                  "id": "u:fbc36a8811b8"
+                                }
+                              ],
+                              "id": "u:0a9d32e3feac",
+                              "messages": {
+                              },
+                              "pullRefresh": {
+                              },
+                              "subTitle": "",
+                              "style": {
+                                "backgroundColor": "rgba(255, 255, 255, 1)"
+                              }
+                            }
+                          ],
+                          "id": "u:83219b60a33d",
+                          "position": "right"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "id": "u:2858d55dc5d4",
+                "level": "primary"
+              },
+              {
+                "type": "button",
+                "label": "导出数据",
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                    ]
+                  }
+                },
+                "id": "u:b3c0e093e9e0",
+                "className": "m-l-sm"
+              },
+              {
+                "type": "button",
+                "label": "筛选数据",
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "args": {
+                          "msgType": "info",
+                          "position": "top-center",
+                          "closeButton": true,
+                          "showIcon": true,
+                          "msg": "“筛选数据”正在研发中，敬请期待！",
+                          "timeout": "1500"
+                        },
+                        "actionType": "toast"
+                      }
+                    ]
+                  }
+                },
+                "id": "u:c2e975fe5623",
+                "className": "m-l-sm"
+              },
+              {
+                "type": "divider",
+                "id": "u:5624ee760379"
+              },
+              {
+                "type": "table",
+                "columns": [
+                  {
+                    "label": "姓名",
+                    "name": "name",
+                    "type": "text",
+                    "id": "u:e6e0fea81ab7"
+                  },
+                  {
+                    "type": "text",
+                    "label": "学号",
+                    "name": "id",
+                    "id": "u:1583e81f5cc0"
+                  },
+                  {
+                    "type": "text",
+                    "label": "学校",
+                    "name": "school",
+                    "id": "u:60f901d06a8d"
+                  },
+                  {
+                    "type": "text",
+                    "label": "标签",
+                    "name": "tags",
+                    "id": "u:c1e752e55e0f"
+                  },
+                  {
+                    "type": "text",
+                    "label": "语文原始分",
+                    "name": "语文",
+                    "id": "u:89c8a37979c9"
+                  },
+                  {
+                    "type": "text",
+                    "label": "数学原始分",
+                    "name": "数学",
+                    "id": "u:92daf77da8d2"
+                  },
+                  {
+                    "type": "text",
+                    "label": "英语原始分",
+                    "name": "英语",
+                    "id": "u:7e547a9d5571"
+                  },
+                  {
+                    "type": "text",
+                    "label": "物理原始分",
+                    "name": "物理",
+                    "id": "u:e7d11a60109b"
+                  },
+                  {
+                    "type": "text",
+                    "label": "历史原始分",
+                    "name": "历史",
+                    "id": "u:36e056016d1c"
+                  },
+                  {
+                    "type": "text",
+                    "label": "化学原始分",
+                    "name": "化学",
+                    "id": "u:fcc477cfd953"
+                  },
+                  {
+                    "type": "text",
+                    "label": "政治原始分",
+                    "name": "政治",
+                    "id": "u:2d811a3f39ba"
+                  },
+                  {
+                    "type": "text",
+                    "label": "生物原始分",
+                    "name": "生物",
+                    "id": "u:e7a03e1ac8c6"
+                  },
+                  {
+                    "type": "text",
+                    "label": "地理原始分",
+                    "name": "地理",
+                    "id": "u:cc8cf6da03af"
+                  },
+                  {
+                    "type": "text",
+                    "label": "不计入排名",
+                    "name": "noranking",
+                    "id": "u:f31f0042020b"
+                  }
+                ],
+                "id": "u:fc3850792b0c"
+              }
+            ],
+            "id": "u:0ef37891b274"
+          },
+          {
+            "title": "分析数据",
+            "body": [
+              {
+                "type": "tabs",
+                "tabs": [
+                  {
+                    "title": "汇总",
+                    "body": {
+                      "type": "tpl",
+                      "tpl": "内容",
+                      "inline": false,
+                      "id": "u:38d8a89eeac6"
+                    },
+                    "id": "u:3915f5503cc0"
+                  }
+                ],
+                "id": "u:a2bfac1b0c06"
+              }
+            ],
+            "id": "u:068343338c50"
+          }
+        ],
+        "id": "u:72752db0c354",
+        "toolbar": [
+          {
+            "type": "container",
+            "body": [
+            ],
+            "id": "u:8af86e429756"
+          }
+        ],
+        "showTip": false,
+        "hidden": false
+      },
+      {
+        "type": "alert",
+        "body": [
+        ],
+        "level": "warning",
+        "id": "u:41e66b71c10b",
+        "title": "系统正在智能分析中，请耐心等待1-3分钟。",
+        "showIcon": true,
+        "hidden": true
+      }
+    ],
+    "id": "u:660a4dfee5eb",
+    "messages": {
+    },
+    "pullRefresh": {
+    },
+    "onEvent": {
+      "inited": {
+        "weight": 0,
+        "actions": [
+        ]
+      }
+    },
+    "initApi": {
+      "method": "post",
+      "url": "https://api.school.ledotec.cn/v2/lowcode/bigdata/score/view",
+      "data": {
+        "taskid": "${params.id}"
+      },
+      "dataType": "json"
+    }
+  }

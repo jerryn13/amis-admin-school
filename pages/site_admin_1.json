@@ -33,10 +33,14 @@
                     "url": "/bigdata/score",
                     "schemaApi": "get:/pages/bigdata_score_task.json",
                     "children":[
-                       {"label": "分析任务管理",
-                       "url": "/bigdata/score/tasks",
-                       "schemaApi": "get:/pages/bigdata_score_task.json"
-                    } 
+                      {"label": "分析任务管理",
+                      "url": "/bigdata/score/tasks",
+                      "schemaApi": "get:/pages/bigdata_score_task.json"
+                      },
+                      {"label": "分析工作台",
+                      "url": "/bigdata/score/analyze",
+                      "schemaApi": "get:/pages/bigdata_score_analyze_view.json"
+                      }
                     ]
                   }
             ]
